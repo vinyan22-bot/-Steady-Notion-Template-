@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steady — The Anti-Burnout Habit System in Notion</title>
+<meta name="description" content="Steady helps you build consistent habits without the guilt. One grace day doesn't break your streak. Notion template, $29.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Karla:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F6F2E9;
+    --sand:#EAE2D2;
+    --sage:#6E7F5C;
+    --moss:#39472F;
+    --clay:#C2754F;
+    --ink:#2B2A24;
+    --ink-soft:#5C5A4E;
+    --line: rgba(43,42,36,0.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Karla',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+  a{color:inherit;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(246,242,233,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;}
+  .logo{font-family:'Fraunces',serif;font-size:20px;font-weight:600;display:flex;align-items:center;gap:8px;}
+  .logo .leaf{color:var(--sage);}
+  .nav-cta{
+    background:var(--moss);color:var(--cream);
+    padding:10px 20px;border-radius:100px;
+    font-size:14px;font-weight:600;text-decoration:none;
+    transition:transform .25s ease, background .25s ease;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--ink);transform:translateY(-1px);}
+
+  /* ---------- hero ---------- */
+  header.hero{padding:88px 0 64px;position:relative;overflow:hidden;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    letter-spacing:0.06em;text-transform:uppercase;color:var(--sage);
+    background:rgba(110,127,92,0.1);
+    padding:7px 14px;border-radius:100px;
+    margin-bottom:28px;
+  }
+  .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--clay);}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;}
+  .hero h1{font-size:clamp(38px,5vw,60px);line-height:1.04;letter-spacing:-0.02em;}
+  .hero h1 em{font-style:italic;color:var(--sage);font-weight:500;}
+  .hero p.sub{
+    margin-top:22px;font-size:18px;color:var(--ink-soft);max-width:46ch;
+  }
+  .hero-actions{margin-top:34px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--moss);color:var(--cream);
+    padding:16px 30px;border-radius:100px;
+    font-weight:700;font-size:15px;text-decoration:none;
+    display:inline-flex;align-items:center;gap:10px;
+    box-shadow:0 8px 24px rgba(57,71,47,0.25);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(57,71,47,0.32);}
+  .price-tag{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink-soft);}
+  .price-tag b{color:var(--ink);font-size:16px;}
+
+  /* ---- signature visual: the Grace Day week strip ---- */
+  .ring-card{
+    background:#fff;border:1px solid var(--line);border-radius:24px;
+    padding:30px;box-shadow:0 30px 60px -30px rgba(43,42,36,0.25);
+  }
+  .ring-card-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:22px;}
+  .ring-card-head h3{font-size:16px;font-weight:600;}
+  .ring-card-head span{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-soft);}
+  .week-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;}
+  .day{
+    aspect-ratio:1;border-radius:12px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:6px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    border:1px solid var(--line);
+    position:relative;
+  }
+  .day .dot{width:9px;height:9px;border-radius:50%;}
+  .day.done{background:rgba(110,127,92,0.14);border-color:transparent;}
+  .day.done .dot{background:var(--sage);}
+  .day.grace{background:rgba(194,117,79,0.12);border-color:transparent;}
+  .day.grace .dot{background:var(--clay);}
+  .day.todo{background:transparent;}
+  .day.todo .dot{background:transparent;border:1.5px solid var(--line);}
+  .ring-card-foot{
+    margin-top:22px;padding-top:18px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .streak-stat{display:flex;align-items:baseline;gap:8px;}
+  .streak-stat .num{font-family:'Fraunces',serif;font-size:30px;font-weight:600;color:var(--moss);}
+  .streak-stat .label{font-size:12px;color:var(--ink-soft);}
+  .legend{display:flex;gap:14px;font-size:11px;color:var(--ink-soft);font-family:'JetBrains Mono',monospace;}
+  .legend span{display:flex;align-items:center;gap:5px;}
+  .legend .sw{width:8px;height:8px;border-radius:50%;}
+
+  /* ---------- philosophy strip ---------- */
+  .belt{
+    background:var(--moss);color:var(--cream);padding:18px 0;
+    overflow:hidden;white-space:nowrap;
+  }
+  .belt-track{display:inline-flex;animation:scroll 32s linear infinite;}
+  .belt-track span{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;
+    padding:0 36px;color:rgba(246,242,233,0.85);
+  }
+  .belt-track span::after{content:"·";margin-left:36px;color:var(--clay);font-style:normal;}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- section heads ---------- */
+  section{padding:96px 0;}
+  .section-head{max-width:560px;margin-bottom:56px;}
+  .section-head .eyebrow{margin-bottom:18px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,40px);}
+  .section-head p{margin-top:14px;color:var(--ink-soft);font-size:16px;}
+
+  /* ---------- modules grid ---------- */
+  .modules{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:20px;overflow:hidden;}
+  .module{background:var(--cream);padding:36px 30px;transition:background .25s ease;}
+  .module:hover{background:#fff;}
+  .module .mark{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--clay);
+    margin-bottom:18px;display:block;
+  }
+  .module h3{font-size:19px;margin-bottom:10px;}
+  .module p{font-size:14.5px;color:var(--ink-soft);}
+
+  /* ---------- grace day explainer (signature, repeated motif) ---------- */
+  .grace{
+    background:var(--sand);border-radius:28px;padding:56px;
+    display:grid;grid-template-columns:0.9fr 1.1fr;gap:48px;align-items:center;
+  }
+  .grace h2{font-size:clamp(26px,3vw,34px);margin-bottom:18px;}
+  .grace p{color:var(--ink-soft);font-size:16px;margin-bottom:18px;}
+  .grace ul{list-style:none;}
+  .grace li{
+    display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line);font-size:14.5px;
+  }
+  .grace li:first-child{border-top:none;}
+  .grace li b{font-family:'Fraunces',serif;font-weight:600;color:var(--moss);min-width:18px;}
+  .month-grid{
+    background:#fff;border-radius:20px;padding:26px;border:1px solid var(--line);
+  }
+  .month-grid-head{display:flex;justify-content:space-between;margin-bottom:18px;}
+  .month-grid-head span{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-soft);}
+  .month-cells{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;}
+  .cell{aspect-ratio:1;border-radius:7px;background:var(--sand);}
+  .cell.done{background:var(--sage);}
+  .cell.grace{background:var(--clay);}
+  .cell.faint{background:rgba(110,127,92,0.18);}
+
+  /* ---------- testimonial / proof ---------- */
+  .proof{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  .quote{
+    background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px;
+  }
+  .quote p{font-size:15px;color:var(--ink);margin-bottom:18px;font-family:'Fraunces',serif;font-style:italic;font-size:17px;line-height:1.5;}
+  .quote .who{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-soft);}
+
+  /* ---------- whats included ---------- */
+  .included{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .inc-row{
+    display:flex;align-items:center;gap:16px;padding:18px 22px;
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+  }
+  .inc-row .ico{
+    width:38px;height:38px;border-radius:10px;background:rgba(110,127,92,0.14);
+    display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
+  }
+  .inc-row h4{font-size:14.5px;font-weight:700;}
+  .inc-row p{font-size:13px;color:var(--ink-soft);}
+
+  /* ---------- pricing ---------- */
+  .pricing-card{
+    max-width:520px;margin:0 auto;background:var(--moss);color:var(--cream);
+    border-radius:28px;padding:48px;text-align:center;
+    box-shadow:0 40px 80px -30px rgba(57,71,47,0.5);
+  }
+  .pricing-card .amount{font-family:'Fraunces',serif;font-size:64px;font-weight:600;margin:14px 0 4px;}
+  .pricing-card .amount sup{font-size:24px;vertical-align:super;}
+  .pricing-card .note{font-size:13px;color:rgba(246,242,233,0.7);margin-bottom:30px;}
+  .pricing-card .btn-primary{background:var(--clay);width:100%;justify-content:center;box-shadow:none;}
+  .pricing-card .btn-primary:hover{background:#d6885e;}
+  .pricing-list{text-align:left;margin-top:30px;display:flex;flex-direction:column;gap:12px;}
+  .pricing-list div{display:flex;gap:10px;font-size:14px;color:rgba(246,242,233,0.9);}
+  .pricing-list div::before{content:"✓";color:var(--clay);font-weight:700;}
+
+  /* ---------- faq ---------- */
+  details{
+    border-top:1px solid var(--line);padding:22px 0;
+  }
+  details:last-child{border-bottom:1px solid var(--line);}
+  summary{
+    cursor:pointer;font-family:'Fraunces',serif;font-size:18px;font-weight:500;
+    list-style:none;display:flex;justify-content:space-between;align-items:center;
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:"+";font-size:22px;color:var(--sage);transition:transform .25s ease;}
+  details[open] summary::after{transform:rotate(45deg);}
+  details p{margin-top:14px;color:var(--ink-soft);font-size:15px;max-width:68ch;}
+
+  /* ---------- footer cta ---------- */
+  .final-cta{
+    background:var(--ink);color:var(--cream);border-radius:28px;
+    padding:72px 48px;text-align:center;
+  }
+  .final-cta h2{font-size:clamp(28px,4vw,42px);color:var(--cream);margin-bottom:16px;}
+  .final-cta p{color:rgba(246,242,233,0.65);margin-bottom:32px;font-size:16px;}
+
+  footer{padding:40px 0;text-align:center;font-size:13px;color:var(--ink-soft);}
+
+  @media (max-width:880px){
+    .hero-grid{grid-template-columns:1fr;}
+    .modules{grid-template-columns:1fr;}
+    .proof{grid-template-columns:1fr;}
+    .included{grid-template-columns:1fr;}
+    .grace{grid-template-columns:1fr;padding:32px;}
+    .final-cta{padding:48px 24px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo"><span class="leaf">🌿</span> Steady</div>
+    <a href="https://vinyan.gumroad.com/l/invrht" class="nav-cta">Get Steady — $29</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">A Notion system for sustainable habits</div>
+      <h1>Consistency beats <em>intensity.</em><br>Rest is part of the system.</h1>
+      <p class="sub">Steady is the anti-burnout habit tracker for people who've started strong and quit by week three. One grace day doesn't break your streak — and that single rule removes most of the guilt that makes habits fail.</p>
+      <div class="hero-actions">
+        <a href="https://vinyan.gumroad.com/l/invrht" class="btn-primary">Duplicate Steady →</a>
+        <div class="price-tag"><b>$29</b> one-time · lifetime access</div>
+      </div>
+    </div>
+
+    <div class="ring-card">
+      <div class="ring-card-head">
+        <h3>This week</h3>
+        <span>Mon – Sun</span>
+      </div>
+      <div class="week-strip">
+        <div class="day done"><div class="dot"></div>M</div>
+        <div class="day done"><div class="dot"></div>T</div>
+        <div class="day grace"><div class="dot"></div>W</div>
+        <div class="day done"><div class="dot"></div>T</div>
+        <div class="day done"><div class="dot"></div>F</div>
+        <div class="day todo"><div class="dot"></div>S</div>
+        <div class="day todo"><div class="dot"></div>S</div>
+      </div>
+      <div class="ring-card-foot">
+        <div class="streak-stat">
+          <span class="num">12</span>
+          <span class="label">day streak,<br>unbroken</span>
+        </div>
+        <div class="legend">
+          <span><span class="sw" style="background:var(--sage)"></span>done</span>
+          <span><span class="sw" style="background:var(--clay)"></span>grace</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="belt">
+  <div class="belt-track">
+    <span>Grace day rule</span><span>70–80% consistency target</span><span>No streak-breaking</span><span>Built for real life</span>
+    <span>Grace day rule</span><span>70–80% consistency target</span><span>No streak-breaking</span><span>Built for real life</span>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">What's inside</div>
+      <h2>Seven tools. One habit system.</h2>
+      <p>Everything you need to plan, track, and recover — built around the idea that missing a day is data, not failure.</p>
+    </div>
+    <div class="modules">
+      <div class="module"><span class="mark">HQ</span><h3>Steady HQ</h3><p>Your daily check-in — energy tracker, focus pick, and a place to log quick wins before the day gets away from you.</p></div>
+      <div class="module"><span class="mark">WK</span><h3>Weekly Habit Board</h3><p>Track every habit with smart scoring and a built-in weekly reflection, so Sunday becomes a reset, not a scramble.</p></div>
+      <div class="module"><span class="mark">MO</span><h3>Monthly Progress</h3><p>Stats, a running wins log, and your consistency percentage — the number that actually matters more than streaks.</p></div>
+      <div class="module"><span class="mark">LAB</span><h3>Habit Design Lab</h3><p>Build habits that stick using habit stacking and minimum-dose formulas, not willpower.</p></div>
+      <div class="module"><span class="mark">R&R</span><h3>Rest &amp; Recovery Planner</h3><p>Planned rest days, a burnout checklist, and recovery ideas for the weeks that don't go to plan.</p></div>
+      <div class="module"><span class="mark">JRN</span><h3>Daily Journal + Stack Builder</h3><p>A lightweight daily journal alongside ready-to-use habit stacking templates and a quick start guide.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="grace">
+      <div>
+        <div class="eyebrow">The core mechanic</div>
+        <h2>The Grace Day Rule</h2>
+        <p>Most trackers punish a missed day with a broken streak — so one bad day turns into a bad week. Steady builds in a grace day every week, on purpose, before you need it.</p>
+        <ul>
+          <li><b>01</b><span>Miss a planned day and your streak holds, as long as it's inside your grace allowance.</span></li>
+          <li><b>02</b><span>Your target is 70–80% consistency, not 100% — the range that's actually sustainable long-term.</span></li>
+          <li><b>03</b><span>Every month ends with a reflection, not a scoreboard, so you adjust the system instead of blaming yourself.</span></li>
+        </ul>
+      </div>
+      <div class="month-grid">
+        <div class="month-grid-head"><span>October</span><span>74% consistency</span></div>
+        <div class="month-cells" id="monthCells"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Why it works</div>
+      <h2>People don't fail habits. Rigid systems fail people.</h2>
+    </div>
+    <div class="proof">
+      <div class="quote"><p>"I stopped dreading my tracker. Missing Tuesday used to ruin my whole week — now it's just Tuesday."</p><div class="who">— Notion habit-tracker user</div></div>
+      <div class="quote"><p>"The 70–80% target finally matched how I actually live. I've kept this going longer than any tracker before it."</p><div class="who">— Steady user</div></div>
+      <div class="quote"><p>"The rest planner is the part I didn't know I needed. Burnout used to be invisible until it hit."</p><div class="who">— Steady user</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Full duplicate template</div>
+      <h2>Everything, ready to use today</h2>
+      <p>Click duplicate, and it's yours — pre-filled with examples so you're tracking your first habit in minutes.</p>
+    </div>
+    <div class="included">
+      <div class="inc-row"><div class="ico">🏡</div><div><h4>Steady HQ</h4><p>Daily check-in, energy tracker, quick wins</p></div></div>
+      <div class="inc-row"><div class="ico">📆</div><div><h4>Weekly Habit Board</h4><p>Smart scoring + weekly reflection</p></div></div>
+      <div class="inc-row"><div class="ico">📊</div><div><h4>Monthly Progress</h4><p>Stats, wins log, consistency %</p></div></div>
+      <div class="inc-row"><div class="ico">🎯</div><div><h4>Habit Design Lab</h4><p>Stacking + minimum-dose formulas</p></div></div>
+      <div class="inc-row"><div class="ico">🌙</div><div><h4>Rest &amp; Recovery Planner</h4><p>Planned rest days, burnout checklist</p></div></div>
+      <div class="inc-row"><div class="ico">🔁</div><div><h4>Habit Stack Builder</h4><p>Easy, ready-to-use stacking templates</p></div></div>
+      <div class="inc-row"><div class="ico">👨‍💻</div><div><h4>Daily Journal</h4><p>Lightweight daily reflection space</p></div></div>
+      <div class="inc-row"><div class="ico">📘</div><div><h4>Quick Start Guide</h4><p>Set up and start tracking in minutes</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="pricing-card">
+      <div class="eyebrow" style="background:rgba(246,242,233,0.12);color:var(--cream);">One-time payment</div>
+      <div class="amount">$29</div>
+      <div class="note">Lifetime access · all future updates included</div>
+      <a href="https://vinyan.gumroad.com/l/invrht" class="btn-primary">Duplicate Steady to your workspace</a>
+      <div class="pricing-list">
+        <div>Full template, all 7 modules</div>
+        <div>Works in Notion free plan</div>
+        <div>Quick start guide included</div>
+        <div>Lifetime updates, no subscription</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap" style="max-width:760px;">
+    <div class="section-head" style="margin-bottom:8px;">
+      <div class="eyebrow">Questions</div>
+      <h2>Before you duplicate</h2>
+    </div>
+    <details open>
+      <summary>How does delivery work?</summary>
+      <p>After purchase, you'll get a link to the Steady template — click "Duplicate" and it copies straight into your own Notion workspace. No setup software, no downloads.</p>
+    </details>
+    <details>
+      <summary>Do I need the paid version of Notion?</summary>
+      <p>No. Steady is built to work fully on Notion's free plan.</p>
+    </details>
+    <details>
+      <summary>What's the Grace Day Rule, really?</summary>
+      <p>Each week, one missed habit day is automatically absorbed into your consistency score instead of breaking your streak. It's a deliberate design choice — rest and real life are part of the system, not exceptions to it.</p>
+    </details>
+    <details>
+      <summary>Can I customize it?</summary>
+      <p>Yes. Once duplicated, it's a normal Notion workspace — rename habits, add pages, or restyle freely.</p>
+    </details>
+    <details>
+      <summary>Is this a subscription?</summary>
+      <p>No. It's a one-time $29 payment for lifetime access, including future template updates.</p>
+    </details>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="final-cta">
+      <h2>Start steady. Stay steady.</h2>
+      <p>Your next habit doesn't need more intensity. It needs a system that expects you to miss a day — and keeps going anyway.</p>
+      <a href="https://vinyan.gumroad.com/l/invrht" class="btn-primary">Duplicate Steady — $29 →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">🌿 Steady — a Notion habit system · vinyan.gumroad.com</div>
+</footer>
+
+<script>
+  // build a generative month grid: mostly done, scattered grace days, a few faint future days
+  const grid = document.getElementById('monthCells');
+  const days = 35;
+  let pattern = [];
+  for(let i=0;i<days;i++){
+    const r = Math.random();
+    if(i > 26){ pattern.push('faint'); }
+    else if(r < 0.12){ pattern.push('grace'); }
+    else if(r < 0.85){ pattern.push('done'); }
+    else { pattern.push(''); }
+  }
+  grid.innerHTML = pattern.map(p => `<div class="cell ${p}"></div>`).join('');
+</script>
+
+</body>
+</html>
